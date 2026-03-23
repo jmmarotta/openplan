@@ -39,4 +39,3 @@ Use OpenPlan as a filesystem-native planning system that keeps the source of tru
 - Prefer filesystem reads over CLI rendering when you need plan contents.
 - Use `list` to discover plans and `new` to allocate IDs, then work on files directly.
 - Treat invalid plans as files to repair in the editor, not as data to silently ignore.
-- Keep edits reviewable and deterministic.

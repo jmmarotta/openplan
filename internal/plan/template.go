@@ -24,7 +24,7 @@ func Template(meta Frontmatter) string {
 	b.WriteString("---\n")
 	fmt.Fprintf(&b, "id: %s\n", meta.ID)
 	fmt.Fprintf(&b, "title: %s\n", yamlStringLiteral(meta.Title))
-	fmt.Fprintf(&b, "status: %s\n", meta.Status)
+	fmt.Fprintf(&b, "status: %s # inbox, plan, active, done, cancelled\n", meta.Status)
 	if len(meta.Tags) == 0 {
 		b.WriteString("tags: []\n")
 	} else {

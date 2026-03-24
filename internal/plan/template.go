@@ -25,15 +25,15 @@ func Template(meta Frontmatter) string {
 	fmt.Fprintf(&b, "id: %s\n", meta.ID)
 	fmt.Fprintf(&b, "title: %s\n", yamlStringLiteral(meta.Title))
 	fmt.Fprintf(&b, "status: %s # inbox, plan, active, done, cancelled\n", meta.Status)
-	if len(meta.Tags) == 0 {
-		b.WriteString("tags: []\n")
-	} else {
+	if len(meta.Tags) > 0 {
 		b.WriteString("tags:\n")
 		for _, tag := range NormalizeTags(meta.Tags) {
 			fmt.Fprintf(&b, "  - %s\n", tag)
 		}
 	}
-	fmt.Fprintf(&b, "parent: %s\n", yamlStringLiteral(meta.Parent))
+	if meta.Parent != "" {
+		fmt.Fprintf(&b, "parent: %s\n", yamlStringLiteral(meta.Parent))
+	}
 	b.WriteString("---\n\n")
 
 	for i, section := range templateSections {

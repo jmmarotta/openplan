@@ -54,7 +54,6 @@ title: "Draft README"
 status: inbox # inbox, plan, active, done, cancelled
 tags:
   - docs
-parent: ""
 ---
 
 ## Objective
@@ -91,3 +90,4 @@ parent: ""
 - OpenPlan does not require git for correctness, but git improves reviewability.
 - `list` keeps valid plans visible even when invalid files exist, and reports issues separately.
 - `show` reports validation failures for the target plan instead of printing a misleading partial summary.
+- `tags` and `parent` are optional in frontmatter and can be omitted when empty.

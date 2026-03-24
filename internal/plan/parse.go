@@ -36,6 +36,9 @@ func ParseBytes(path string, data []byte) (Document, error) {
 	if err := decoder.Decode(&fm); err != nil {
 		return Document{}, fmt.Errorf("parse frontmatter: %w", err)
 	}
+	if fm.Tags == nil {
+		fm.Tags = []string{}
+	}
 
 	return Document{
 		Path:        path,

@@ -40,24 +40,20 @@ func Validate(doc Document) []ValidationIssue {
 	}
 
 	// Validate tags
-	if doc.Frontmatter.Tags == nil {
-		addIssue("tags", "is required")
-	} else {
-		seenTags := make(map[string]struct{}, len(doc.Frontmatter.Tags))
-		for _, tag := range doc.Frontmatter.Tags {
-			normalized := normalizeTag(tag)
-			// Keep tag reporting field-oriented and deterministic instead of
-			// emitting one issue per element.
-			if tag != normalized || !tagPattern.MatchString(normalized) {
-				addIssue("tags", "must contain normalized lowercase tags")
-				break
-			}
-			if _, ok := seenTags[tag]; ok {
-				addIssue("tags", "must not contain duplicates")
-				break
-			}
-			seenTags[tag] = struct{}{}
+	seenTags := make(map[string]struct{}, len(doc.Frontmatter.Tags))
+	for _, tag := range doc.Frontmatter.Tags {
+		normalized := normalizeTag(tag)
+		// Keep tag reporting field-oriented and deterministic instead of
+		// emitting one issue per element.
+		if tag != normalized || !tagPattern.MatchString(normalized) {
+			addIssue("tags", "must contain normalized lowercase tags")
+			break
 		}
+		if _, ok := seenTags[tag]; ok {
+			addIssue("tags", "must not contain duplicates")
+			break
+		}
+		seenTags[tag] = struct{}{}
 	}
 
 	// Validate parent

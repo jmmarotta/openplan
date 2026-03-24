@@ -2,6 +2,20 @@
 
 OpenPlan is a small Go CLI for filesystem-native technical planning. Each plan lives as a single markdown file in `.plans/`, stays reviewable in git, and remains easy to edit in a normal editor.
 
+## Installation
+
+Install the latest released version with Go:
+
+```sh
+go install github.com/jmmarotta/openplan/cmd/openplan@latest
+```
+
+Install the local checkout from the repository root:
+
+```sh
+go install ./cmd/openplan
+```
+
 ## Goals
 
 - Keep plans local and on disk.

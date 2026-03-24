@@ -14,9 +14,10 @@ func newInitCmd() *cobra.Command {
 	var prefix string
 
 	cmd := &cobra.Command{
-		Use:   "init",
-		Short: "Initialize OpenPlan in the current directory",
-		Args:  cobra.NoArgs,
+		Use:     "init",
+		Aliases: []string{"i"},
+		Short:   "Initialize OpenPlan in the current directory",
+		Args:    cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cwd, err := os.Getwd()
 			if err != nil {

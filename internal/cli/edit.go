@@ -13,9 +13,10 @@ import (
 // the CLI itself
 func newEditCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "edit <ID>",
-		Short: "Open an existing plan in $EDITOR",
-		Args:  cobra.ExactArgs(1),
+		Use:     "edit <ID>",
+		Aliases: []string{"e"},
+		Short:   "Open an existing plan in $EDITOR",
+		Args:    cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := requireRepo()
 			if err != nil {

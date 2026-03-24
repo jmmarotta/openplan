@@ -83,6 +83,55 @@ func TestInitListAndShowJSON(t *testing.T) {
 	}
 }
 
+func TestCommandAliases(t *testing.T) {
+	root := t.TempDir()
+	output, err := runCommand(t, root, "i", "--prefix", "OPN")
+	if err != nil {
+		t.Fatalf("init alias returned error: %v", err)
+	}
+	if !strings.Contains(output, "Initialized OpenPlan") {
+		t.Fatalf("unexpected init alias output: %q", output)
+	}
+
+	ctx, err := repo.Load(root)
+	if err != nil {
+		t.Fatalf("Load returned error: %v", err)
+	}
+	content := plan.Template(plan.Frontmatter{
+		ID:     "OPN-1_ABCDEFGH",
+		Title:  "Draft README",
+		Status: plan.StatusPlan,
+		Tags:   []string{"docs"},
+	})
+	if err := os.WriteFile(ctx.PlanPath("OPN-1_ABCDEFGH"), []byte(content), 0o644); err != nil {
+		t.Fatalf("WriteFile returned error: %v", err)
+	}
+
+	listOutput, err := runCommand(t, root, "ls")
+	if err != nil {
+		t.Fatalf("list alias returned error: %v", err)
+	}
+	if !strings.Contains(listOutput, "OPN-1_ABCDEFGH") {
+		t.Fatalf("unexpected list alias output: %q", listOutput)
+	}
+
+	if _, err := runCommandWithEditor(t, root, "e", "OPN-1_ABCDEFGH"); err != nil {
+		t.Fatalf("edit alias returned error: %v", err)
+	}
+
+	if _, err := runCommandWithEditor(t, root, "n", "Alias plan"); err != nil {
+		t.Fatalf("new alias returned error: %v", err)
+	}
+
+	validateOutput, err := runCommand(t, root, "v")
+	if err != nil {
+		t.Fatalf("validate alias returned error: %v", err)
+	}
+	if validateOutput != "All plans valid.\n" {
+		t.Fatalf("unexpected validate alias output: %q", validateOutput)
+	}
+}
+
 func TestValidateReportsInvalidPlans(t *testing.T) {
 	root := t.TempDir()
 	if _, err := runCommand(t, root, "init", "--prefix", "OPN"); err != nil {
@@ -144,4 +193,22 @@ func runCommand(t *testing.T, cwd string, args ...string) (string, error) {
 	cmd.SetArgs(args)
 	err = cmd.Execute()
 	return out.String(), err
+}
+
+func runCommandWithEditor(t *testing.T, cwd string, args ...string) (string, error) {
+	t.Helper()
+
+	oldEditor, hadEditor := os.LookupEnv("EDITOR")
+	if err := os.Setenv("EDITOR", "true"); err != nil {
+		return "", err
+	}
+	defer func() {
+		if hadEditor {
+			_ = os.Setenv("EDITOR", oldEditor)
+			return
+		}
+		_ = os.Unsetenv("EDITOR")
+	}()
+
+	return runCommand(t, cwd, args...)
 }

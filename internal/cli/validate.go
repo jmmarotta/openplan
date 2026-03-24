@@ -10,9 +10,10 @@ import (
 // frontmatter or validation issues are present
 func newValidateCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "validate",
-		Short: "Validate all plans in the repository",
-		Args:  cobra.NoArgs,
+		Use:     "validate",
+		Aliases: []string{"v"},
+		Short:   "Validate all plans in the repository",
+		Args:    cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := requireRepo()
 			if err != nil {

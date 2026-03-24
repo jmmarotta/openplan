@@ -15,9 +15,10 @@ func newNewCmd() *cobra.Command {
 	var parent string
 
 	cmd := &cobra.Command{
-		Use:   "new [title]",
-		Short: "Create a new plan and open it in $EDITOR",
-		Args:  cobra.MaximumNArgs(1),
+		Use:     "new [title]",
+		Aliases: []string{"n"},
+		Short:   "Create a new plan and open it in $EDITOR",
+		Args:    cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := requireRepo()
 			if err != nil {

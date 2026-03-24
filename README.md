@@ -28,17 +28,17 @@ go install ./cmd/openplan
 1. Run `openplan init --prefix OPN` in a repository root.
 2. Run `openplan new "Draft README"` to create a templated plan and open it in `$EDITOR`.
 3. Edit frontmatter and body sections directly in the markdown file under `.plans/`.
-4. Use `openplan list` and `openplan show <FULL_ID>` to inspect plan metadata and paths without dumping full bodies.
+4. Use `openplan list` or `openplan ls`, and `openplan show <FULL_ID>`, to inspect plan metadata and paths without dumping full bodies.
 5. Use `openplan validate` to check the repository for invalid plans.
 
 ## Commands
 
-- `openplan init [--prefix OPN]`
-- `openplan new [title] [--tag TAG] [--parent ID]`
-- `openplan edit <FULL_ID>`
-- `openplan list [--all] [--status STATUS] [--tag TAG] [--json]`
+- `openplan init` (`openplan i`) `[--prefix OPN]`
+- `openplan new` (`openplan n`) `[title] [--tag TAG] [--parent ID]`
+- `openplan edit` (`openplan e`) `<FULL_ID>`
+- `openplan list` (`openplan ls`) `[--all] [--status STATUS] [--tag TAG] [--json]`
 - `openplan show <FULL_ID> [--json]`
-- `openplan validate`
+- `openplan validate` (`openplan v`)
 - `openplan skill`
 
 `openplan init` creates `.plans/openplan.jsonc` by default. `openplan.json` is also accepted.

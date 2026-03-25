@@ -132,6 +132,43 @@ func TestCommandAliases(t *testing.T) {
 	}
 }
 
+func TestNewNoEditJSONCreatesPlanWithoutEditor(t *testing.T) {
+	root := t.TempDir()
+	if _, err := runCommand(t, root, "init", "--prefix", "OPN"); err != nil {
+		t.Fatalf("init command returned error: %v", err)
+	}
+
+	output, err := runCommand(t, root, "new", "Picker UX", "--no-edit", "--json", "--tag", "plugin")
+	if err != nil {
+		t.Fatalf("new command returned error: %v", err)
+	}
+
+	var created struct {
+		ID   string `json:"id"`
+		Path string `json:"path"`
+	}
+	if err := json.Unmarshal([]byte(output), &created); err != nil {
+		t.Fatalf("json.Unmarshal new output returned error: %v", err)
+	}
+	if created.ID == "" || created.Path == "" {
+		t.Fatalf("unexpected new json: %s", output)
+	}
+	if _, err := os.Stat(created.Path); err != nil {
+		t.Fatalf("created plan path stat returned error: %v", err)
+	}
+
+	listOutput, err := runCommand(t, root, "list", "--json")
+	if err != nil {
+		t.Fatalf("list command returned error: %v", err)
+	}
+	if !strings.Contains(listOutput, created.ID) {
+		t.Fatalf("expected created ID in list output, got %s", listOutput)
+	}
+	if !strings.Contains(listOutput, created.Path) {
+		t.Fatalf("expected created path in list output, got %s", listOutput)
+	}
+}
+
 func TestValidateReportsInvalidPlans(t *testing.T) {
 	root := t.TempDir()
 	if _, err := runCommand(t, root, "init", "--prefix", "OPN"); err != nil {

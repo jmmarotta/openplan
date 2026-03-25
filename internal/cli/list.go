@@ -3,12 +3,29 @@ package cli
 import (
 	"fmt"
 	"strings"
+	"text/tabwriter"
 
 	"github.com/jmmarotta/openplan/internal/plan"
 	"github.com/jmmarotta/openplan/internal/store"
 
 	"github.com/spf13/cobra"
 )
+
+// listRow is the stable JSON shape for each `list` result row.
+type listRow struct {
+	ID     string      `json:"id"`
+	Title  string      `json:"title"`
+	Status plan.Status `json:"status"`
+	Tags   []string    `json:"tags"`
+	Parent string      `json:"parent,omitempty"`
+	Path   string      `json:"path"`
+}
+
+// listOutput is the machine-readable contract for `openplan list --json`.
+type listOutput struct {
+	Plans  []listRow              `json:"plans"`
+	Issues []plan.ValidationIssue `json:"issues,omitempty"`
+}
 
 // newListCmd exposes repository browsing with optional filters while keeping
 // invalid files visible as diagnostics instead of silently dropping them
@@ -75,4 +92,45 @@ func newListCmd() *cobra.Command {
 	cmd.Flags().StringVar(&tag, "tag", "", "Filter by tag")
 	cmd.Flags().BoolVar(&jsonOutput, "json", false, "Render machine-readable JSON")
 	return cmd
+}
+
+// formatListText keeps the human-readable list output deterministic and compact
+// while still surfacing invalid files separately.
+func formatListText(result store.ListResult) (string, error) {
+	var b strings.Builder
+
+	if len(result.Documents) > 0 {
+		tw := tabwriter.NewWriter(&b, 0, 4, 2, ' ', 0)
+		_, _ = fmt.Fprintln(tw, "ID\tSTATUS\tTITLE\tTAGS\tPARENT")
+		for _, doc := range result.Documents {
+			parent := doc.Frontmatter.Parent
+			if parent == "" {
+				parent = "-"
+			}
+			_, _ = fmt.Fprintf(tw, "%s\t%s\t%s\t%s\t%s\n",
+				doc.Frontmatter.ID,
+				doc.Frontmatter.Status,
+				doc.Frontmatter.Title,
+				strings.Join(doc.Frontmatter.Tags, ","),
+				parent,
+			)
+		}
+		if err := tw.Flush(); err != nil {
+			return "", err
+		}
+	} else {
+		b.WriteString("No plans found.\n")
+	}
+
+	if len(result.Issues) > 0 {
+		if len(result.Documents) > 0 {
+			b.WriteString("\n")
+		}
+		b.WriteString("Issues:\n")
+		for _, issue := range result.Issues {
+			fmt.Fprintf(&b, "- %s: %s: %s\n", issue.Path, issue.Field, issue.Message)
+		}
+	}
+
+	return b.String(), nil
 }

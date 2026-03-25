@@ -66,7 +66,7 @@ also accepted.
 ## Commands
 
 - `openplan init` (`openplan i`) `[--prefix OPN]`: create OpenPlan config for the repo
-- `openplan new` (`openplan n`) `[title] [--tag TAG] [--parent ID]`: create a templated plan and open it in `$EDITOR`
+- `openplan new` (`openplan n`) `[title] [--tag TAG] [--parent ID] [--no-edit] [--json]`: create a templated plan, optionally skip opening `$EDITOR`, and optionally return machine-readable metadata
 - `openplan edit` (`openplan e`) `<FULL_ID>`: open an existing plan in `$EDITOR`
 - `openplan list` (`openplan ls`) `[--all] [--status STATUS] [--tag TAG] [--json]`: list plans and validation issues
 - `openplan show` `<FULL_ID> [--json]`: show metadata for one plan without printing the full body
@@ -155,3 +155,5 @@ For local verification:
 go test ./...
 golangci-lint run
 ```
+
+Install `lefthook` locally so the repository hooks can run.

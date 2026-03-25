@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"openplan/internal/plan"
-	"openplan/internal/store"
+	"github.com/jmmarotta/openplan/internal/plan"
+	"github.com/jmmarotta/openplan/internal/store"
 
 	"github.com/spf13/cobra"
 )

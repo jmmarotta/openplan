@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"regexp"
 
-	"openplan/internal/plan"
+	"github.com/jmmarotta/openplan/internal/plan"
 )
 
 const defaultConfigFilename = "openplan.jsonc"

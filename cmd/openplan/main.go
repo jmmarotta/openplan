@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"openplan/internal/cli"
+	"github.com/jmmarotta/openplan/internal/cli"
 )
 
 func main() {

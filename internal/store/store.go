@@ -10,8 +10,8 @@ import (
 	"sort"
 	"strings"
 
-	"openplan/internal/plan"
-	"openplan/internal/repo"
+	"github.com/jmmarotta/openplan/internal/plan"
+	"github.com/jmmarotta/openplan/internal/repo"
 )
 
 // Query describes the filters applied when listing plans from disk

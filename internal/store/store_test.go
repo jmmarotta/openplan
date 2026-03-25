@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"openplan/internal/plan"
-	"openplan/internal/repo"
+	"github.com/jmmarotta/openplan/internal/plan"
+	"github.com/jmmarotta/openplan/internal/repo"
 )
 
 func TestCreateGetAndList(t *testing.T) {

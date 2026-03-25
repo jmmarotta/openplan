@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
-	"openplan/internal/plan"
-	"openplan/internal/repo"
+	"github.com/jmmarotta/openplan/internal/plan"
+	"github.com/jmmarotta/openplan/internal/repo"
 )
 
 func TestSkillCommandMatchesGolden(t *testing.T) {

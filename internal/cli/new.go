@@ -3,7 +3,7 @@ package cli
 import (
 	"fmt"
 
-	"openplan/internal/store"
+	"github.com/jmmarotta/openplan/internal/store"
 
 	"github.com/spf13/cobra"
 )

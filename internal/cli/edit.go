@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"openplan/internal/plan"
+	"github.com/jmmarotta/openplan/internal/plan"
 
 	"github.com/spf13/cobra"
 )

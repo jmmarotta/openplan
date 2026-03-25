@@ -1,4 +1,4 @@
-module openplan
+module github.com/jmmarotta/openplan
 
 go 1.25.0
 

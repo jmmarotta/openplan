@@ -28,7 +28,33 @@ Use OpenPlan as a filesystem-native planning system that keeps the source of tru
 - Plans live in `.plans/`.
 - Each plan is a single markdown file with YAML frontmatter.
 - Required frontmatter fields: `id`, `title`, `status`, `tags`, `parent`.
-- The canonical body sections are `Objective`, `Context`, `Research`, `Plan`, `Outputs`, `Verification`, `Review`, and `Notes`.
+- The canonical body sections are `Objective`, `Context`, `Research`, `Open Questions`, `System Surfaces`, `Invariants`, `Outputs`, `Verification`, `Execution Plan`, and `Notes`.
+- `Open Questions` should always be present. Use `None.` when there are no open questions to record.
+- Keep the canonical top-level sections flat. Add nested subsections only when a section grows large enough to need internal structure.
+- `System Surfaces` should be interface-first: group by file or ownership boundary, then list the meaningful surfaces under it.
+- Default each `System Surfaces` entry to a code block with an APOSD-style interface comment plus the signature, command, or surface line itself.
+- Add bullets below a `System Surfaces` entry only when the code block alone is not enough to explain an important boundary, constraint, or dependency.
+- If a low-level file has no meaningful public surface, document the higher-level surface instead of inventing a shallow one.
+- Use `Invariants` for non-negotiable ownership rules, interface guarantees, and design constraints that must remain true during implementation.
+
+Example `System Surfaces` shape:
+
+````md
+## System Surfaces
+
+### `lua/openplan/cli.lua`
+
+#### `list_plans(opts?)`
+
+```lua
+--- Return the current repository's OpenPlan catalog in a plugin-ready shape.
+--- This surface centralizes CLI invocation and decoding so callers do not depend
+--- on process execution details or wire-format knowledge.
+---@param opts? { all?: boolean }
+---@return { plans: openplan.PlanRow[], issues: openplan.ValidationIssue[] }|nil, string? err
+list_plans(opts)
+```
+````
 
 ## ID Rules
 

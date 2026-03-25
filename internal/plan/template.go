@@ -10,10 +10,12 @@ var templateSections = []string{
 	"Objective",
 	"Context",
 	"Research",
-	"Plan",
+	"Open Questions",
+	"System Surfaces",
+	"Invariants",
 	"Outputs",
 	"Verification",
-	"Review",
+	"Execution Plan",
 	"Notes",
 }
 

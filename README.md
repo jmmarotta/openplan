@@ -62,16 +62,54 @@ tags:
 
 ## Research
 
-## Plan
+## Open Questions
+
+## System Surfaces
+
+## Invariants
 
 ## Outputs
 
 ## Verification
 
-## Review
+## Execution Plan
 
 ## Notes
 ```
+
+`Open Questions` should always be present. Use `None.` when there are no open
+questions to record.
+
+`System Surfaces` should describe the main caller-facing interfaces and
+entrypoints in an interface-first way, grouped by file or ownership boundary.
+
+Section authoring conventions:
+
+- Keep the canonical top-level sections flat. Add nested subsections only when a section grows large enough to need internal structure.
+- In `System Surfaces`, use a file or ownership-boundary header first, then list the meaningful surfaces under it.
+- Default each surface entry to a code block containing an APOSD-style interface comment plus the signature, command, or surface line itself.
+- Use extra bullets under a surface only when the code block alone cannot capture an important boundary, constraint, or dependency.
+- If a low-level file has no meaningful public surface, document the higher-level surface instead of inventing a shallow one.
+- Use `Invariants` for the non-negotiable ownership rules, interface guarantees, and design constraints that must remain true through implementation.
+
+Example `System Surfaces` entry:
+
+````md
+## System Surfaces
+
+### `lua/openplan/cli.lua`
+
+#### `list_plans(opts?)`
+
+```lua
+--- Return the current repository's OpenPlan catalog in a plugin-ready shape.
+--- This surface centralizes CLI invocation and decoding so callers do not depend
+--- on process execution details or wire-format knowledge.
+---@param opts? { all?: boolean }
+---@return { plans: openplan.PlanRow[], issues: openplan.ValidationIssue[] }|nil, string? err
+list_plans(opts)
+```
+````
 
 ## ID Semantics
 

@@ -23,14 +23,19 @@ Use OpenPlan as a filesystem-native planning system that keeps the source of tru
 - Plans live in `.plans/`.
 - Each plan is a single markdown file with YAML frontmatter.
 - Required frontmatter fields: `id`, `title`, `status`, `tags`, `parent`.
-- The canonical body sections are `Objective`, `Context`, `Research`, `Open Questions`, `System Surfaces`, `Invariants`, `Outputs`, `Verification`, `Execution Plan`, and `Notes`.
+- The canonical body sections are `Objective`, `Context`, `Research`, `Open Questions`, `System Surfaces`, `Invariants`, `Touch Points`, `Outputs`, `Verification`, `Execution Plan`, and `Notes`.
 - `Open Questions` should always be present. Use `None.` when there are no open questions to record.
+- `Touch Points` should always be present. Use `None.` when there are no concrete artifacts to record.
 - Keep the canonical top-level sections flat. Add nested subsections only when a section grows large enough to need internal structure.
 - `System Surfaces` should be interface-first: group by file or ownership boundary, then list the meaningful surfaces under it.
+- If a file has multiple meaningful surfaces, prefer light bullet labels over extra headers before the code blocks.
 - Default each `System Surfaces` entry to a code block with an APOSD-style interface comment plus the signature, command, or surface line itself.
 - Add bullets below a `System Surfaces` entry only when the code block alone is not enough to explain an important boundary, constraint, or dependency.
 - If a low-level file has no meaningful public surface, document the higher-level surface instead of inventing a shallow one.
 - Use `Invariants` for non-negotiable ownership rules, interface guarantees, and design constraints that must remain true during implementation.
+- Use `Touch Points` as a compact artifact inventory, not a second design section.
+- Group `Touch Points` by repo or subsystem when useful.
+- Format each touch point as a bullet with `A`, `M`, `D`, or `R`, with the path bolded on the first line and one short explanation below it.
 
 Example `System Surfaces` shape:
 
@@ -39,7 +44,7 @@ Example `System Surfaces` shape:
 
 ### `lua/openplan/cli.lua`
 
-#### `list_plans(opts?)`
+- `list_plans(opts?)`
 
 ```lua
 --- Return the current repository's OpenPlan catalog in a plugin-ready shape.
@@ -50,6 +55,20 @@ Example `System Surfaces` shape:
 list_plans(opts)
 ```
 ````
+
+Example `Touch Points` shape:
+
+```md
+## Touch Points
+
+### `openplan.nvim`
+
+- **A `lua/openplan/cli.lua`**
+  Add the machine-facing adapter for list and create flows.
+
+- **M `README.md`**
+  Document installation, commands, and picker behavior.
+```
 
 ## ID Rules
 

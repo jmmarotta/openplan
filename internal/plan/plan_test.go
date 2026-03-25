@@ -25,7 +25,7 @@ func TestParseBytesValidateAndTemplate(t *testing.T) {
 		t.Fatalf("Validate() returned issues: %#v", issues)
 	}
 
-	for _, heading := range []string{"## Objective", "## Open Questions", "## System Surfaces", "## Invariants", "## Verification", "## Execution Plan", "## Notes"} {
+	for _, heading := range []string{"## Objective", "## Open Questions", "## System Surfaces", "## Invariants", "## Touch Points", "## Verification", "## Execution Plan", "## Notes"} {
 		if !strings.Contains(content, heading) {
 			t.Fatalf("template missing section %q", heading)
 		}

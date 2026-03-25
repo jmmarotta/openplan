@@ -13,6 +13,7 @@ var templateSections = []string{
 	"Open Questions",
 	"System Surfaces",
 	"Invariants",
+	"Touch Points",
 	"Outputs",
 	"Verification",
 	"Execution Plan",

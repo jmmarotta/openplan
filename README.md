@@ -99,6 +99,8 @@ tags:
 
 ## Invariants
 
+## Touch Points
+
 ## Outputs
 
 ## Verification
@@ -120,10 +122,18 @@ OpenPlan's default template is meant to keep plans concrete and reviewable:
 - `Open Questions`: unresolved decisions or unknowns; use `None.` when there are none
 - `System Surfaces`: the main interfaces, commands, APIs, or entrypoints affected by the work
 - `Invariants`: rules or guarantees that must remain true
+- `Touch Points`: the concrete files and artifacts expected to change; use `None.` when there are none
 - `Outputs`: the expected artifacts or deliverables
 - `Verification`: how you will confirm the work is correct
 - `Execution Plan`: the ordered implementation approach
 - `Notes`: anything useful that does not fit the main structure
+
+Section authoring conventions:
+
+- `Open Questions` should always be present. Use `None.` when there are no open questions to record.
+- `Touch Points` should always be present. Use `None.` when there are no concrete artifacts to record.
+- `System Surfaces` should describe the main caller-facing interfaces and entrypoints in an interface-first way.
+- `Invariants` should capture the rules and guarantees that must remain true through implementation.
 
 ## IDs and Behavior
 
